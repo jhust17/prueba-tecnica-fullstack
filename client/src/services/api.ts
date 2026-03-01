@@ -1,4 +1,4 @@
-const API_URL = '/api';
+const API_URL = 'https://api-gestion-tareas-30je.onrender.com/api';
 
 export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
   const token = localStorage.getItem('token');
