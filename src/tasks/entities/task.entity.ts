@@ -1,0 +1,44 @@
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+
+export enum TaskStatus {
+  PENDING = 'pending',
+  IN_PROGRESS = 'in_progress',
+  COMPLETED = 'completed',
+}
+
+export enum TaskPriority {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+}
+
+@Entity('tasks')
+export class Task {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column()
+  title!: string;
+
+  @Column({ nullable: true })
+  description!: string;
+
+  @Column({ type: 'varchar', default: TaskStatus.PENDING })
+  status!: TaskStatus;
+
+  @Column({ type: 'varchar', default: TaskPriority.MEDIUM })
+  priority!: TaskPriority;
+
+  @Column({ type: 'date', nullable: true })
+  due_date!: Date;
+
+  @CreateDateColumn()
+  created_at!: Date;
+
+  @UpdateDateColumn()
+  updated_at!: Date;
+
+  @ManyToOne(() => User, (user) => user.tasks)
+  owner!: User; //
+}
